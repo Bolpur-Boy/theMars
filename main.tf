@@ -23,9 +23,9 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  description = "USA"
+  description = "Resource Group name"
   type        = string
-  default     = "rg-windows-vms"
+  default     = "USA"
 }
 
 variable "vm_count" {
@@ -37,7 +37,7 @@ variable "vm_count" {
 variable "vm_size" {
   description = "VM SKU size"
   type        = string
-  default     = "Standard_D2s_v3"
+  default     = "Standard_E2s_v3"
 }
 
 variable "admin_username" {
@@ -67,27 +67,6 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-# ------------------------------
-# Networking
-# ------------------------------
-resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-windows-vms"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-windows-vms"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
-}
-
-resource "azurerm_network_security_group" "nsg" {
-  name                = "nsg-windows-vms"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "Allow-RDP"
@@ -100,12 +79,8 @@ resource "azurerm_network_security_group" "nsg" {
     source_address_prefix      = "*"   # TODO: restrict to your admin IP range in production
     destination_address_prefix = "*"
   }
-}
 
-resource "azurerm_subnet_network_security_group_association" "nsg_assoc" {
-  subnet_id                 = azurerm_subnet.subnet.id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
+
 
 # ------------------------------
 # Public IPs (one per VM)

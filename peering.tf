@@ -56,7 +56,7 @@ resource "azurerm_virtual_network" "vnet1" {
 }
 # Create subnet for works
 resource "azurerm_subnet" "it1" {
-  name                 = "it"
+  name                 = "it1"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["172.25.1.0/24"]

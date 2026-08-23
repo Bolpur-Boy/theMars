@@ -61,3 +61,29 @@ resource "azurerm_subnet" "it2" {
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = ["172.25.1.0/24"]
 }
+
+# Peer HO -> Junglepur
+resource "azurerm_virtual_network_peering" "ho_to_junglepur" {
+  name                      = "HO-to-Junglepur"
+  resource_group_name       = azurerm_resource_group.rg.name
+  virtual_network_name      = azurerm_virtual_network.vnet.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet1.id
+
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+}
+
+# Peer Junglepur -> HO
+resource "azurerm_virtual_network_peering" "junglepur_to_ho" {
+  name                      = "Junglepur-to-HO"
+  resource_group_name       = azurerm_resource_group.rg.name
+  virtual_network_name      = azurerm_virtual_network.vnet1.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet.id
+
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+}

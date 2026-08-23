@@ -31,16 +31,16 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
 
 }
-# Create subnet for worksSN
-resource "azurerm_subnet" "it" {
+# Create subnet for IT-Dept.
+resource "azurerm_subnet" "it1" {
   name                 = "it"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["172.16.1.0/24"]
 }
 
-# Create subnet for AppSN
-resource "azurerm_subnet" "accts" {
+# Create subnet for Accounts-Dept.
+resource "azurerm_subnet" "accts1" {
   name                 = "accts"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
@@ -55,7 +55,7 @@ resource "azurerm_virtual_network" "vnet1" {
 
 }
 # Create subnet for works
-resource "azurerm_subnet" "it1" {
+resource "azurerm_subnet" "it2" {
   name                 = "it"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet1.name

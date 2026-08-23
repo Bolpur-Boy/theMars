@@ -47,7 +47,7 @@ resource "azurerm_subnet" "accts" {
   address_prefixes     = ["172.16.2.0/24"]
 }
 # Create a virtual network
-resource "azurerm_virtual_network" "vnet" {
+resource "azurerm_virtual_network" "vnet1" {
   name                = "Junglepur"
   address_space       = ["172.25.0.0/16"]
   location            = "westus"
@@ -55,7 +55,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 }
 # Create subnet for works
-resource "azurerm_subnet" "it" {
+resource "azurerm_subnet" "it1" {
   name                 = "it"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
